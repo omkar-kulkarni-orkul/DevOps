@@ -49,9 +49,7 @@ pipeline {
         }
          stage('Post Deployment Check') {
             steps {
-                sh "dzdo su -"
-                sh "cd /home/e1077483/DevOps/
-                sh "newman run Student_Api.postman_collection.json -r html,cli"
+                sh "dzdo su - newman run Student_Api.postman_collection.json -r html,cli"
                 echo 'All deployment check done'
             }
         }
