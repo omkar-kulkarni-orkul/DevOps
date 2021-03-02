@@ -24,7 +24,7 @@ pipeline {
             steps {
 		parallel(
 		    'Quality Check':{
-	                echo 'QA verified'
+	                echo 'QA Automation verified'
 		    },
 		    'Security Check':{
 			 dependencyCheck additionalArguments: '--scan=. --format=HTML', odcInstallation: 'OWASP-Dependency-Check'
@@ -57,6 +57,16 @@ pipeline {
                 echo 'All deployment check done'
 		sh '/usr/local/bin/newman run Ok_Api.postman_collection.json -r html,cli'
             }
+	}
+	stage('Test Slave on Windows')
+	{
+	agent{
+	label "Delegated Job"
+	}
+	steps{
+	bat "C:\DevOps\workspace\Delegated job\DevOpsSafal.bat"
+	}
+	}
 	}
     }
 }
