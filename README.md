@@ -14,7 +14,7 @@ The first example I am going to explain is about HTTP GET request, second exampl
 
 Before checkout this project create a folder under C drive like C:\Projects
  
-Now open command prompt
+Now open command prompt,
 
 1. cd c:\Projects
 2. check out the mail branch
