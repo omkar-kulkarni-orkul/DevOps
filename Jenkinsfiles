@@ -52,31 +52,11 @@ pipeline {
                 echo 'Deployment done'
             }
         }
-        agent { node { label 'Delegated job' } }
-			
-			environment{
-				SCRIPT_LOCATION="C:\\DevOps\\workspace\\Delegated job"
-				SCRIPT_NAME="SAFAL DevOps Script.xlsx"        
-				BROWSER="Chrome"
-				OWT="5"
-				TESTURL="http://www.google.com"        
-				CMDARGS=""
-				NONUIMode="false"
-				RESULT_LOCATION="${WORKSPACE}/Results/"
-			}	
-			
-            steps {                
-					echo "Executing Test using SAFAL"
-                
-					bat  "LaunchSAFAL.bat   ${env.SCRIPT_NAME}  \"${env.SCRIPT_LOCATION}\" ${env.BROWSER} \"URL=${env.TESTURL};OWT=${env.OWT};CMDARGUMENTS=${env.CMDARGS}\" \"${env.RESULT_LOCATION}\" ${env.NONUIMode}  "               
-            }			
-            post {                
-                    always {
-                        echo "Test execution done. Uploading results to Jenkins Server...."                        
-                        archiveArtifacts artifacts: 'Results/**'
-						echo "Done"
-                }
-            }			
-        }
+        stage('Post Deployment Check') {
+            steps {
+                echo 'All deployment check done'
+		sh '/usr/local/bin/newman run Ok_Api.postman_collection.json -r html,cli'
+            }
+	}
     }
 }
